@@ -4,7 +4,11 @@
 
 เอกสารอ้างอิง [ReportClickup ที่ commit 0f06bbd](https://github.com/sidaratkhaobang/report-clickup/tree/0f06bbdd85d50337238242a24d5f4142369007a0)
 
-## เปิดคู่มือ
+## เปิดคู่มือบน GitHub Pages
+
+[ReportClickup Docs](https://sidaratkhaobang.github.io/reportClickup-docs/) จะเปิดได้หลัง deploy สำเร็จครั้งแรก ตั้ง Source เป็น **GitHub Actions** ใน [Settings → Pages](https://github.com/sidaratkhaobang/reportClickup-docs/settings/pages) แล้วรัน workflow **Deploy documentation to GitHub Pages** จากแท็บ Actions หลังจากนั้นทุกครั้งที่ push เข้า `main` ระบบจะ deploy HTML และภาพจาก `public/`
+
+## เปิดคู่มือบนเครื่อง
 
 ใช้ Node.js 20 ขึ้นไป จากโฟลเดอร์นี้ให้รัน
 
