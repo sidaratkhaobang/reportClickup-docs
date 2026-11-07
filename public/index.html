@@ -11,35 +11,112 @@ header{padding-top:3rem} h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.2;mar
 section{background:white;border:1px solid #dbe3ee;border-radius:1rem;padding:1.4rem;margin:1rem 0}
 h2{margin-top:0} a{color:#17489d} nav ul{display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;padding-left:1.4rem}
 .badge{background:#dceaff;color:#17489d;border-radius:2rem;padding:.3rem .8rem}
+table{border-collapse:collapse;width:100%}th,td{padding:.6rem;text-align:left;vertical-align:top;border-bottom:1px solid #dbe3ee}
+.table{overflow-x:auto} code{overflow-wrap:anywhere} pre{overflow:auto;background:#edf3fc;padding:1rem;border-radius:.5rem}
+figure{margin:1rem 0} img{display:block;max-width:100%;height:auto;border:1px solid #dbe3ee;border-radius:.5rem}
 </style>
 </head>
 <body>
 <header>
-<span class="badge">โครงคู่มือ · รอตรวจสอบกับระบบจริง</span>
+<span class="badge">คู่มือผู้ใช้และนักพัฒนา · ซอร์ส 0f06bbd</span>
 <h1>คู่มือ ReportClickup</h1>
 <p>เอกสารสำหรับอ่านรายงาน Sprint ติดตามสถานะงาน และตีความข้อมูล Capacity ของทีม</p>
 <nav aria-label="สารบัญ"><ul>
-<li><a href="#dashboard">Dashboard</a></li><li><a href="#status">สถานะงาน</a></li>
-<li><a href="#capacity">Capacity</a></li><li><a href="#sync">การอัปเดตข้อมูล</a></li>
-<li><a href="#screenshots">ภาพหน้าจอ</a></li>
+<li><a href="#requirements">ความต้องการ</a></li><li><a href="#architecture">สถาปัตยกรรม</a></li>
+<li><a href="#stack">Technology Stack</a></li><li><a href="#code">โครงสร้างโค้ด</a></li>
+<li><a href="#dashboard">หน้าจอ</a></li><li><a href="#rules">กฎการนับ</a></li>
+<li><a href="#api">API และข้อมูล</a></li><li><a href="#run">วิธีรัน</a></li>
 </ul></nav>
 </header>
 <main>
-<section id="dashboard"><h2>Dashboard และรายงาน Sprint</h2>
-<p>คู่มือส่วนนี้จะอธิบายวิธีเลือกขอบเขตรายงาน การอ่านตัวเลขสรุป และการไล่จากภาพรวมไปยังรายการงานที่เกี่ยวข้อง</p>
-<p>รอตรวจสอบตัวกรองที่มีจริง ค่าเริ่มต้น และผลของการเปลี่ยนตัวกรองต่อแต่ละส่วนของรายงาน</p></section>
-<section id="status"><h2>กลุ่มสถานะงาน</h2>
-<p>คู่มือส่วนนี้จะจับคู่สถานะจาก ClickUp กับชื่อกลุ่มที่เห็นในรายงาน และใช้ตัวอย่างงานหนึ่งรายการอธิบายว่าการเปลี่ยนสถานะส่งผลต่อยอดรวมอย่างไร</p>
-<p>รอตรวจสอบกฎการจัดกลุ่มและวิธีนับงานย่อยหรืองานที่มีสถานะเฉพาะโปรเจกต์</p></section>
-<section id="capacity"><h2>Capacity</h2>
-<p>คู่มือส่วนนี้จะอธิบายหน่วยที่ใช้ แหล่งที่มาของตัวเลข และวิธีเทียบปริมาณงานกับกำลังของทีมใน Sprint เดียวกัน</p>
-<p>รอตรวจสอบสูตรจริงและวิธีจัดการงานที่ไม่มีค่าประมาณหรือมีผู้รับผิดชอบหลายคน</p></section>
-<section id="sync"><h2>การอัปเดตข้อมูล</h2>
-<p>คู่มือส่วนนี้จะระบุว่าข้อมูลมาจากไหน อัปเดตเมื่อใด วิธีตรวจว่าข้อมูลล่าสุดหรือยัง และวิธีรับมือเมื่ออัปเดตไม่สำเร็จ</p>
-<p>รอตรวจสอบลำดับขั้นตอนและข้อความที่ระบบแสดงจริง</p></section>
-<section id="screenshots"><h2>ภาพหน้าจอประกอบ</h2>
-<p>รอภาพจากโปรเจกต์หลักสำหรับ Dashboard บนเดสก์ท็อปและมือถือ กลุ่มสถานะงาน Capacity และสรุป Sprint แต่ละภาพจะระบุหน้าจอ ชุดข้อมูลตัวอย่าง และจุดที่ควรสังเกต</p></section>
+<section id="requirements"><h2>เอกสารความต้องการ</h2>
+<p>ReportClickup ช่วยให้ทีมส่งมอบงานตรวจความคืบหน้ารายสัปดาห์ ภาระงานข้ามโปรเจกต์ และแผน Sprint ถัดไปจากข้อมูล ClickUp ชุดเดียวกัน ผู้ใช้หลักคือคนอ่านรายงานและผู้ดูแลการตั้งค่า ClickUp กับรายชื่อทีม รายการต่อไปนี้สรุปความต้องการจากพฤติกรรมในซอร์ส</p>
+<div class="table"><table><thead><tr><th>รหัส</th><th>ความต้องการ</th><th>พฤติกรรมที่ตรวจสอบได้</th></tr></thead><tbody>
+<tr><td>FR-01</td><td>ดึงงานของทีมแบบอ่านอย่างเดียว</td><td>รองรับ Sprint ปัจจุบัน ย้อนหลัง 4 และล่วงหน้า 3 รวมสัปดาห์แผนที่ยังไม่มีงาน</td></tr>
+<tr><td>FR-02</td><td>รวมงานข้ามโปรเจกต์</td><td>ใช้ Sprint List ที่ตรงกันในแต่ละ Space หรือใช้ Due ภายในสัปดาห์เมื่อไม่มี List และรวมด้วย Task ID</td></tr>
+<tr><td>FR-03</td><td>สำรวจรายงานตามขอบเขต</td><td>เลือก Sprint → โปรเจกต์ → ผู้รับผิดชอบ แล้วสลับภาพรวม รายบุคคล และรายการงานได้</td></tr>
+<tr><td>FR-04</td><td>เทียบภาระงานกับ Capacity</td><td>ตั้งชั่วโมงรายคนต่อ Sprint และแสดงส่วนต่างเมื่อมีข้อมูลเพียงพอ</td></tr>
+<tr><td>FR-05</td><td>ติดตามความเสี่ยงและงานล่วงหน้า</td><td>แสดงงานเลยกำหนด งานรอตรวจ และแผน Sprint ถัดไป พร้อมเปิดงานใน ClickUp</td></tr>
+<tr><td>FR-06</td><td>นำรายงานไปใช้งานต่อ</td><td>ส่งออก CSV ของงานตามตัวกรอง ภาพสรุป PNG และพิมพ์หรือบันทึก PDF ผ่านเบราว์เซอร์</td></tr>
+<tr><td>NFR-01</td><td>เก็บข้อมูลที่ใช้งานได้เมื่อ Sync ล้มเหลว</td><td>แทนที่ไฟล์ snapshot หลังดึงสำเร็จและแสดงข้อมูลล่าสุดที่บันทึกไว้เมื่อดึงไม่สำเร็จ</td></tr>
+<tr><td>NFR-02</td><td>จำกัดการเข้าถึง token</td><td>เก็บ ClickUp token ฝั่ง FastAPI และให้เบราว์เซอร์เรียก API ผ่าน Next.js proxy</td></tr>
+</tbody></table></div></section>
+<section id="architecture"><h2>สถาปัตยกรรมและเส้นทางข้อมูล</h2>
+<pre>Browser / React → Next.js proxy → FastAPI → ClickUp API
+                                     ↕
+                             data/sprints.json
+                                     ↓
+                           กฎรายงานใน domain.py</pre>
+<ol>
+<li>เมื่อเปิดหน้า Dashboard เบราว์เซอร์โหลด snapshot และรายงานที่มีอยู่ก่อน แล้วสั่ง Sync เพื่อขอข้อมูลล่าสุด ผู้ใช้กด Sync ซ้ำได้จากหน้ารายงาน</li>
+<li>FastAPI อ่านการตั้งค่าและรายชื่อทีม จากนั้นเรียก ClickUp เพื่อหาช่วง Sprint และงานที่ Due ตามช่วงที่ครอบคลุม พร้อมตรวจ Sprint List ของ Space ที่พบ</li>
+<li>ตัวแปลงข้อมูลปรับ Task, สถานะ, Estimate, Due และผู้รับผิดชอบให้อยู่ในรูปแบบเดียวกัน เมื่อดึงสำเร็จ API รวมประวัติ Rejected ที่เคยพบและแทนไฟล์ snapshot</li>
+<li>เมื่อเรียกรายงาน FastAPI อ่าน snapshot และคำนวณผลตาม Sprint กับ Capacity ที่ได้รับ จากนั้นหน้า React กรองมุมมองและจัดรูปแบบเวลาเป็นชั่วโมงหรือวัน</li>
+</ol></section>
+<section id="stack"><h2>Technology Stack</h2>
+<div class="table"><table><thead><tr><th>ส่วน</th><th>เทคโนโลยี</th><th>หน้าที่</th></tr></thead><tbody>
+<tr><td>Dashboard</td><td>Node.js 20+, Next.js 15.5, React 19.1, TypeScript 5.8, CSS</td><td>App Router, ตัวกรอง, หน้ารายงาน และ API proxy</td></tr>
+<tr><td>Backend</td><td>Python 3.9+ ตาม README, FastAPI, Uvicorn, HTTPX, Pydantic 2</td><td>เรียก ClickUp, ตรวจ request, คำนวณและส่งรายงาน</td></tr>
+<tr><td>Storage</td><td>JSON, localStorage, sessionStorage</td><td>snapshot ฝั่งเซิร์ฟเวอร์, Capacity ต่อ Sprint และ Sprint ที่เลือกในเซสชัน</td></tr>
+<tr><td>ส่งออก</td><td>html2canvas 1.4, CSV และ browser print</td><td>สร้าง PNG จากหน้ารายงานและใช้หน้าต่างพิมพ์สำหรับ PDF</td></tr>
+<tr><td>ตรวจสอบ</td><td>pytest, TypeScript compiler, Next.js build, Playwright ใน devDependencies</td><td>ทดสอบกฎและการอ่าน ClickUp ตรวจชนิดข้อมูลและ build หน้าเว็บ</td></tr>
+</tbody></table></div>
+<p>เลขเวอร์ชันฝั่งเว็บอ้างอิงช่วงเวอร์ชันที่ประกาศใน package.json ของระบบหลัก ส่วนเว็บคู่มือนี้เสิร์ฟ HTML ด้วย Node.js</p></section>
+<section id="code"><h2>โครงสร้างโค้ด</h2>
+<div class="table"><table><thead><tr><th>ตำแหน่งในระบบหลัก</th><th>ความรับผิดชอบ</th></tr></thead><tbody>
+<tr><td><code>api/app/main.py</code></td><td>ประกาศ API, ประสาน Sync, บันทึกเวลาแรกที่พบ Rejected และส่งข้อมูลเข้า report()</td></tr>
+<tr><td><code>api/app/clickup.py</code></td><td>อ่าน ClickUp แบบแบ่งหน้าและ retry, ค้นหา Sprint List และ normalize งาน</td></tr>
+<tr><td><code>api/app/domain.py</code></td><td>รวมข้อมูลตาม Sprint และคำนวณยอดงาน, Estimate, Capacity และสัญญาณผิดปกติ</td></tr>
+<tr><td><code>api/app/cache.py</code></td><td>อ่าน snapshot และเขียนผ่านไฟล์ชั่วคราวก่อนแทนไฟล์จริง</td></tr>
+<tr><td><code>api/app/settings.py</code>, <code>team.py</code></td><td>อ่าน env หรือ .env และสร้างชุด ID สมาชิกทีม</td></tr>
+<tr><td><code>web/app/page.tsx</code></td><td>โหลดรายงาน, คุมตัวกรอง, ตั้ง Capacity, สร้างแผนถัดไปและส่งออก</td></tr>
+<tr><td><code>web/components/ReportViews.tsx</code></td><td>แสดงภาพรวม รายบุคคล รายการงาน และคำอธิบายวิธีนับ</td></tr>
+<tr><td><code>web/app/api/proxy/[...path]/route.ts</code></td><td>ส่งคำขอจาก browser ไปยังกลุ่ม endpoint ที่อนุญาตใน FastAPI</td></tr>
+<tr><td><code>web/lib/</code>, <code>api/tests/</code></td><td>ชนิดข้อมูลและตัวเรียก API ฝั่งเว็บ กับชุดทดสอบ client และกฎรายงาน</td></tr>
+</tbody></table></div></section>
+<section id="dashboard"><h2>วิธีอ่านหน้ารายงาน</h2>
+<ol>
+<li><strong>แถบหัวรายงาน</strong> ตรวจ Sprint ที่เลือก เวลาเก็บข้อมูล และข้อความ Sync ก่อนอ่านตัวเลข เมนูส่งออกอยู่ถัดจากปุ่ม Sync</li>
+<li><strong>ตัวกรอง</strong> เลือก Sprint ก่อน แล้วเลือกโปรเจกต์และผู้รับผิดชอบ รายชื่อผู้รับผิดชอบจะปรับตามโปรเจกต์ที่เลือก</li>
+<li><strong>ภาพรวมทีมและงาน</strong> ดูภาระงาน ตาราง Capacity งานรอตรวจ งานเลยกำหนด และแผน Sprint ถัดไป กดรายการงานเพื่อเปิดใน ClickUp</li>
+<li><strong>ติดตามรายบุคคล</strong> ใช้ตรวจภาระงานของสมาชิกและงานที่อยู่ในขอบเขตที่เลือก</li>
+<li><strong>รายการงาน</strong> ใช้ตัวกรองสถานะ งานเลยกำหนด หรือช่องค้นหาเพื่อตรวจรายการที่อยู่เบื้องหลังยอดสรุป</li>
+</ol>
+<p>ภาพต่อไปนี้ถ่ายจาก Dashboard ของระบบหลักที่รันด้วย snapshot จำลอง ค่าแจ้งเตือน Sync ในภาพเกิดจากการไม่ได้ตั้ง token ในชุดสาธิต</p>
+<figure><img src="screenshots/overview.jpg" alt="ภาพรวม Sprint พร้อมตัวกรอง ตารางภาระงาน และแผนสัปดาห์ถัดไป" loading="lazy"><figcaption>ภาพรวมทีมและงาน ใช้ตัวกรองด้านบนเพื่อกำหนดขอบเขตก่อนอ่านยอดสรุป</figcaption></figure>
+<figure><img src="screenshots/weekly.jpg" alt="หน้าติดตามงานรายบุคคลรายสัปดาห์" loading="lazy"><figcaption>ติดตามรายบุคคล เปิดรายละเอียดงานของสมาชิกเพื่ออ่านรายการและ Estimate</figcaption></figure>
+<figure><img src="screenshots/tasks.jpg" alt="รายการงานพร้อมตัวกรองสถานะและช่องค้นหา" loading="lazy"><figcaption>รายการงาน ใช้ค้นหาหรือตรวจงานตามสถานะและกำหนดส่ง</figcaption></figure>
+</section>
+<section id="rules"><h2>กฎรายงานและข้อจำกัด</h2>
+<ul>
+<li><strong>ขอบเขตโปรเจกต์</strong> Project หมายถึง ClickUp Space รายงานแสดงงานที่เกี่ยวข้องกับรายชื่อทีมและงานใน Sprint List ที่ยังไม่มอบหมาย การค้นพบ Space อัตโนมัติขึ้นกับงานของทีมที่พบในช่วง Due หรืองานใน Sprint List หลัก</li>
+<li><strong>จำนวนงานและชั่วโมง</strong> นับ Task ID หนึ่งครั้ง เมื่อมีทั้งข้อมูลจาก Due และ List ให้ใช้จาก List ยอดจำนวนรายการรวม Parent ได้ แต่ยอด Estimate ใช้รายการที่ไม่มี Subtask อยู่ในชุดที่นำมานับ เพื่อเลี่ยงบวกชั่วโมงซ้ำ งานไม่มี Estimate ทำให้ยอดชั่วโมงเป็นค่าขั้นต่ำ</li>
+<li><strong>Done และ QA</strong> สถานะ Completed หรือ Closed หรือ status type Done/Closed ถือว่าเสร็จ ส่วน Completed ใช้สื่อว่า Dev เสร็จและ QA ผ่าน Internal review คือ Dev เสร็จและรอตรวจ จึงไม่นับชั่วโมงในงาน Dev คงเหลือ</li>
+<li><strong>เลยกำหนด</strong> ตรวจเฉพาะ Todo และ In progress ตามสถานะที่ระบบรองรับ ถ้า Due มีเวลาชัดเจนให้เทียบ timestamp หากไม่มีเวลาให้เริ่มนับว่าเลยกำหนดในวันถัดไปตามเวลา Bangkok</li>
+<li><strong>Capacity</strong> กรอกได้ 0–168 ชั่วโมงต่อคนต่อ Sprint เก็บในเบราว์เซอร์ Free = Capacity − Estimate ของงานที่รับผิดชอบคนเดียว โดยใช้ Load รวมทุกโปรเจกต์ ถ้ามีงานร่วม งานเดี่ยวที่ขาด Estimate หรือยังไม่ได้ตั้ง Capacity ระบบจะไม่สรุป Free</li>
+<li><strong>ข้อจำกัดข้อมูลย้อนหลัง</strong> Sprint เก่าแสดงสถานะจาก snapshot ล่าสุดที่ Sync ประวัติ Rejected เริ่มเมื่อระบบสังเกตเห็นจาก snapshot ส่วน Sprint Goal, Demo, PO feedback และหลักฐานทดสอบยังต้องมีแหล่งข้อมูลแบบมีโครงสร้าง</li>
+</ul></section>
+<section id="api"><h2>API และข้อมูลที่จัดเก็บ</h2>
+<p>เบราว์เซอร์เรียก <code>/api/proxy/…</code> ใน Next.js ซึ่งส่งต่อไปที่ <code>/api/…</code> ใน FastAPI</p>
+<div class="table"><table><thead><tr><th>FastAPI endpoint</th><th>การทำงาน</th></tr></thead><tbody>
+<tr><td><code>GET /api/health</code></td><td>สถานะ API และสถานะการตั้งค่า token</td></tr>
+<tr><td><code>GET /api/sprints</code></td><td>รายการ Sprint ที่เลือกได้จาก snapshot</td></tr>
+<tr><td><code>GET /api/snapshot</code></td><td>snapshot ล่าสุดพร้อมงาน ช่วงเวลา แหล่งข้อมูล และประวัติที่สังเกตได้</td></tr>
+<tr><td><code>POST /api/sync</code></td><td>ดึงข้อมูลใหม่และส่งเวลาที่ Sync สำเร็จ หาก ClickUp ล้มเหลวตอบ 503</td></tr>
+<tr><td><code>GET /api/report/{list_id}</code></td><td>คำนวณรายงานจาก Sprint ใน snapshot</td></tr>
+<tr><td><code>POST /api/report/{list_id}</code></td><td>คำนวณรายงานโดยรับ <code>capacityMinutes</code> เป็นแผนที่ ID สมาชิกไปยังจำนวนนาที ค่า Capacity ไม่ถูกบันทึกฝั่ง API</td></tr>
+</tbody></table></div></section>
+<section id="run"><h2>วิธีรันระบบหลัก</h2>
+<ol>
+<li>สร้าง virtual environment ด้วย <code>python3 -m venv .venv</code> แล้วติดตั้งด้วย <code>.venv/bin/pip install -r api/requirements.txt</code></li>
+<li>คัดลอก <code>.env.example</code> เป็น <code>.env</code> ตั้ง <code>CLICKUP_API_TOKEN</code>, Workspace ID, Sprint Folder ID, Sprint Space ID และ <code>CLICKUP_TEAM_MEMBERS</code> เป็น JSON array ที่แต่ละสมาชิกมี <code>id</code> และ <code>name</code> เก็บ token ไว้ในเครื่อง</li>
+<li>เปิด API จากโฟลเดอร์ <code>api</code> ด้วย <code>../.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8766 --reload</code></li>
+<li>อีก terminal เปิดจาก <code>web</code> ด้วย <code>npm ci</code> แล้ว <code>npm run dev</code> เปิดที่ <code>http://127.0.0.1:3000</code> ถ้ารันพร้อมเว็บคู่มือ ให้ตั้ง <code>PORT=3100 npm start</code> ที่ฝั่งคู่มือ</li>
+</ol>
+<p>Next.js ใช้ <code>BACKEND_URL</code> เพื่อชี้ไป FastAPI ค่าเริ่มต้นคือ <code>http://127.0.0.1:8766</code> ระบบหลักออกแบบให้รันในเครื่อง การเปิดให้เข้าถึงผ่านเครือข่ายสาธารณะต้องเพิ่มการยืนยันตัวตนก่อน</p>
+<p>ตรวจโค้ดหลักด้วย <code>.venv/bin/python -m pytest api -q</code> และจากโฟลเดอร์ <code>web</code> ใช้ <code>npm run typecheck</code> กับ <code>npm run build</code></p>
+</section>
 </main>
-<footer>ReportClickup Docs</footer>
+<footer>อ้างอิง <a href="https://github.com/sidaratkhaobang/report-clickup/tree/0f06bbdd85d50337238242a24d5f4142369007a0">ซอร์ส ReportClickup ที่ commit 0f06bbd</a></footer>
 </body>
 </html>
